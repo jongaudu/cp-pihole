@@ -1,0 +1,22 @@
+version: '2.4'
+services:
+  pihole:
+    image: jgaudu/cp-pihole
+    restart: unless-stopped
+    environment:
+      - TZ=America/NewYork #change to your timezone
+      - WEBPASSWORD=password
+      - PIHOLE_UID=0
+    networks:
+      lannet:
+        ipv4_address: 192.168.0.100 #change to your desired IP
+networks:
+  lannet:
+    driver: bridge
+    driver_opts:
+      com.cradlepoint.network.bridge.uuid: 00000000-0d93-319d-8220-4a1fb0372b51 #Primary LAN uuid
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24 #change to your desired subnet
+          gateway: 192.168.0.1 #change to your desired gateway
